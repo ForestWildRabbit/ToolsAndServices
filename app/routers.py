@@ -16,14 +16,6 @@ async def startup_event():
     await user_collection.insert_many(response['results'])
 
 
-@users_router.get("/")
-async def root():
-    response = await fetch_json("https://randomuser.me/api/?results=5")
-    await user_collection.insert_many(response['results'])
-    print(response['results'])
-    return {}
-
-
 @users_router.get("/users")
 async def get_users(page: int = Query(1, ge=1), limit: int = Query(10, ge=1, le=20)):
     skip = (page - 1) * limit
